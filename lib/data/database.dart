@@ -8,7 +8,7 @@ class TodoDataBase {
 
   void createInitialData(){
     todoList = [
-      ["Add first Task1", false]
+      ["Add first Task", false]
     ];
   }
 

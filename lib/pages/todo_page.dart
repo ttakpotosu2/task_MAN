@@ -18,19 +18,17 @@ class _TodoPageState extends State<TodoPage> {
   final _box = Hive.box('todoBox');
   TodoDataBase db = TodoDataBase();
 
+  final _controller = TextEditingController();
+
   @override
   void initState() {
-    
     if(_box.get("TODOLIST") == null) {
       db.createInitialData();
     } else {
       db.loadData();
     }
-    
     super.initState();
   }
-
-  final _controller = TextEditingController();
 
   void deleteTask(int index) {
     setState(() {
@@ -57,7 +55,10 @@ class _TodoPageState extends State<TodoPage> {
           return DialogBox(
             controller: _controller,
             onSave: saveNewTask,
-            onCancel: () => Navigator.of(context).pop(),
+            onCancel: () {
+              Navigator.of(context).pop();
+              _controller.clear();
+            }
           );
         });
   }
@@ -72,14 +73,14 @@ class _TodoPageState extends State<TodoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.yellow[200],
+        backgroundColor: Colors.black45,
         appBar: AppBar(
-          title: const Text("Todo"),
+          title: const Text("Task Manager"),
           backgroundColor: Colors.yellow[400],
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: createNewTask,
-          backgroundColor: Colors.yellow,
+          backgroundColor: Colors.yellow[400],
           child: Icon(Icons.add),
         ),
         body: ListView.builder(
